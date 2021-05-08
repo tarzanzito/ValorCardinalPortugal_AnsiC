@@ -1,0 +1,68 @@
+
+https://www.youtube.com/watch?v=JU-vwvSH_0g
+
+http://candcplusplus.com/create-static-library-with-code-blocks-and-create-dynamic-library-with-codeblockswith-pictures
+
+
+
+Generate Static LIB C
+---------------------
+
+create add.c
+
+int add(int a, int b)
+{
+  return a + b;
+}
+
+create sub.create
+
+int sub(int a, int b)
+{
+  return a - b;
+}
+
+
+compile
+gcc -c add.c
+gcc -c sub.c
+
+gera   add.o e sub.o
+
+ar  rs libbasic.a add.o sub.o 
+
+---
+
+create basic.h
+
+int add(int a, int b);
+int sub(int a, int b);
+
+
+create demo.c
+
+#include <stdio.h>
+#include "basic.h"
+
+
+int main()
+{
+	pribtf("add: %d", add(12, 23));
+	pribtf("sub: %d", sub(23, 13));
+	
+	return 0;
+}
+
+complie
+gcc -c demo.c
+	gcc -I . -c demo.c
+gcc -o demo demo.o libbasic.a
+	gcc -o demo -L demo.o -lbasic
+
+
+comanodos efectuados pelo codeBlocks num static lib project
+
+gcc.exe -Wall -O2  -c C:\DATOS\_ValorExtensoCardinal\ValorCardinalPortugal_C\MyStaticLib\MyStaticLib\main.c -o obj\Release\main.o
+ar.exe -r -s bin\Release\libMyStaticLib.a obj\Release\main.o
+
+
