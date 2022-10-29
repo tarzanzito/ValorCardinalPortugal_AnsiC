@@ -532,12 +532,14 @@ char* obtemQualificadorParteInteira(char *valor, bool vazioSeZero)
 
     if (valTemp > 1)
         strcpy(result, FRASE_NOME_INTEIROS_P);
-    else if (valTemp == 1)
-        strcpy(result, FRASE_NOME_INTEIROS_S);
-    else if ((valTemp == 0) && (!vazioSeZero))
-        strcpy(result, FRASE_NOME_INTEIROS_P);
     else
-        strcpy(result, "");
+        if (valTemp == 1)
+            strcpy(result, FRASE_NOME_INTEIROS_S);
+        else
+            if ((valTemp == 0) && (!vazioSeZero))
+                strcpy(result, FRASE_NOME_INTEIROS_P);
+            else
+                strcpy(result, "");
 
     #ifdef DEBUG
         printf("function 'ObtemQualificadorParteInteira' result:[%s]\n", result);
@@ -560,12 +562,14 @@ char* obtemQualificadorParteDecimal(char* valor, bool vazioSeZero)
 
     if (valTemp > 1)
         strcpy(result, FRASE_NOME_DECIMAIS_P);
-    else if (valTemp == 1)
-        strcpy(result, FRASE_NOME_DECIMAIS_S);
-    else if ((valTemp == 0) && (!vazioSeZero))
-        strcpy(result, FRASE_NOME_DECIMAIS_P);
     else
-        strcpy(result, "");
+        if (valTemp == 1)
+            strcpy(result, FRASE_NOME_DECIMAIS_S);
+        else
+            if ((valTemp == 0) && (!vazioSeZero))
+                strcpy(result, FRASE_NOME_DECIMAIS_P);
+            else
+                strcpy(result, "");
 
     #ifdef DEBUG
         printf("function 'ObtemQualificadorParteDecimal' result:[%s]\n", result);
@@ -724,23 +728,23 @@ char* formataValor(char *valor)
         strcat(resultado, ".00");
         return resultado;
     }
-
-    else if (pos == 0) // "." in first position
-    {
-        //len = len + 1;
-        resultado = calloc(len + 2, sizeof(char));
-        //resultado = (char *) malloc(len);
-        //memset(resultado, 0, len);
-        strcpy(resultado, "0");
-        strcat(resultado, valor);
-    }
     else
-    {
-        resultado = calloc(len + 1, sizeof(char));
-        //resultado = (char *) malloc(len);
-        //memset(resultado, 0, len);
-        strcpy(resultado, valor);
-    }
+        if (pos == 0) // "." in first position
+        {
+            //len = len + 1;
+            resultado = calloc(len + 2, sizeof(char));
+            //resultado = (char *) malloc(len);
+            //memset(resultado, 0, len);
+            strcpy(resultado, "0");
+            strcat(resultado, valor);
+        }
+        else
+        {
+            resultado = calloc(len + 1, sizeof(char));
+            //resultado = (char *) malloc(len);
+            //memset(resultado, 0, len);
+            strcpy(resultado, valor);
+        }
 
     char *resultado2;
     pos = indexof(resultado, ".");
@@ -756,18 +760,19 @@ char* formataValor(char *valor)
         //XFREE free(resultado);
         return resultado2;
     }
-    else if (rlen == 2)
-    {
-        resultado2 = calloc(len + 2, sizeof(char));
-        //resultado2 = malloc(len);
-        //memset(resultado2, 0, len);
-        strcpy(resultado2, resultado);
-        strcat(resultado2, "0");
-        //XFREE free(resultado);
-        return resultado2;
-    }
     else
-        return substring(resultado, 0, pos + 3);
+        if (rlen == 2)
+        {
+            resultado2 = calloc(len + 2, sizeof(char));
+            //resultado2 = malloc(len);
+            //memset(resultado2, 0, len);
+            strcpy(resultado2, resultado);
+            strcat(resultado2, "0");
+            //XFREE free(resultado);
+            return resultado2;
+        }
+        else
+            return substring(resultado, 0, pos + 3);
 }
 
 bool valorNegativo(char *valor)
